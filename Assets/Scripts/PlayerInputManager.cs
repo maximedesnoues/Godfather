@@ -12,7 +12,7 @@ public class PlayerInputManager : MonoBehaviour
     [SerializeField, ReadOnly] private PlayerBehaviour _player;
 
     public bool IsInputLocked { get; private set; }
-    public PlayerBehaviour Player { get; private set; }
+    public PlayerInput Map => _map;
 
     private void Start()
     {
@@ -22,9 +22,22 @@ public class PlayerInputManager : MonoBehaviour
         _controllerIndex = _map.devices[0].deviceId;
 
         _player = GameManager.Instance.ConnectPlayer( _controllerIndex );
-        _player.PlayerInputs = this;
-
+        _player.OnConnectController(this);
         //Vibrate(.5f);
+    }
+    public void OnMove(InputValue value)
+    {
+        _player.OnMove(value);
+    }
+
+    public void OnJump(InputValue value)
+    {
+        _player.OnJump(value);
+    }
+
+    public void OnInteract(InputValue value)
+    {
+        _player.OnInteract(value);
     }
 
     /*

@@ -8,21 +8,25 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 5499000562671081618, guid: d9d4e77a379f9d448aa51e75e91b58b6, type: 3}
+    - target: {fileID: 4731418425470048191, guid: d9d4e77a379f9d448aa51e75e91b58b6, type: 3}
       propertyPath: m_Color.b
-      value: 0.8097518
+      value: 0.8644493
       objectReference: {fileID: 0}
-    - target: {fileID: 5499000562671081618, guid: d9d4e77a379f9d448aa51e75e91b58b6, type: 3}
+    - target: {fileID: 4731418425470048191, guid: d9d4e77a379f9d448aa51e75e91b58b6, type: 3}
       propertyPath: m_Color.g
-      value: 0.5415094
+      value: 0.4666667
       objectReference: {fileID: 0}
-    - target: {fileID: 5499000562671081618, guid: d9d4e77a379f9d448aa51e75e91b58b6, type: 3}
+    - target: {fileID: 4731418425470048191, guid: d9d4e77a379f9d448aa51e75e91b58b6, type: 3}
       propertyPath: m_Color.r
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5615029076674491528, guid: d9d4e77a379f9d448aa51e75e91b58b6, type: 3}
       propertyPath: m_Name
       value: Player2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598547355621091316, guid: d9d4e77a379f9d448aa51e75e91b58b6, type: 3}
+      propertyPath: _isFacingRight
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9085693308400167639, guid: d9d4e77a379f9d448aa51e75e91b58b6, type: 3}
       propertyPath: m_LocalPosition.x
