@@ -7,9 +7,7 @@ public class SettingsMenu : MonoBehaviour
 {
     [SerializeField] private AudioMixer audioMixer;
 
-    [SerializeField] private Slider masterVolumeSlider;
-    [SerializeField] private Slider musicVolumeSlider;
-    [SerializeField] private Slider soundEffectsVolumeSlider;
+    [SerializeField] private Slider soundSlider;
 
     [SerializeField] private Dropdown resolutionsDropdown;
     [SerializeField] private Dropdown qualitiesDropdown;
@@ -19,28 +17,28 @@ public class SettingsMenu : MonoBehaviour
         InitializeSettings();
         ApplySettings();
 
-        masterVolumeSlider.onValueChanged.AddListener(delegate { UpdateSettings(); });
-        musicVolumeSlider.onValueChanged.AddListener(delegate { UpdateSettings(); });
-        soundEffectsVolumeSlider.onValueChanged.AddListener(delegate { UpdateSettings(); });
+        soundSlider.onValueChanged.AddListener(delegate { UpdateSettings(); });
         resolutionsDropdown.onValueChanged.AddListener(delegate { UpdateSettings(); });
         qualitiesDropdown.onValueChanged.AddListener(delegate { UpdateSettings(); });
     }
 
     private void InitializeSettings()
     {
-        masterVolumeSlider.value = 0.5f;
-        musicVolumeSlider.value = 0.5f;
-        soundEffectsVolumeSlider.value = 0.5f;
+        soundSlider.value = 0.5f;
 
         Resolution[] resolutions = Screen.resolutions;
         resolutionsDropdown.ClearOptions();
-
         List<string> resolutionOptions = new List<string>();
         int currentResolutionIndex = 0;
 
         for (int i = 0; i < resolutions.Length; i++)
         {
-            string option = resolutions[i].width + " x " + resolutions[i].height + " (" + resolutions[i].refreshRate + " Hz)";
+#if UNITY_6000_0_OR_NEWER
+            var rr = resolutions[i].refreshRateRatio;
+            string option = $"{resolutions[i].width} x {resolutions[i].height} ({rr.numerator / rr.denominator} Hz)";
+#else
+    string option = $"{resolutions[i].width} x {resolutions[i].height} ({resolutions[i].refreshRate} Hz)";
+#endif
             resolutionOptions.Add(option);
 
             if (resolutions[i].width == Screen.width && resolutions[i].height == Screen.height)
@@ -55,15 +53,16 @@ public class SettingsMenu : MonoBehaviour
 
         string[] qualities = QualitySettings.names;
         qualitiesDropdown.ClearOptions();
+        qualitiesDropdown.AddOptions(new List<string>(qualities));
 
-        List<string> qualityOptions = new List<string>();
-        for (int i = 0; i < qualities.Length; i++)
+        int currentQuality = QualitySettings.GetQualityLevel();
+        if (currentQuality <= 0)
         {
-            qualityOptions.Add(qualities[i]);
+            currentQuality = qualities.Length - 1;
+            QualitySettings.SetQualityLevel(currentQuality);
         }
 
-        qualitiesDropdown.AddOptions(qualityOptions);
-        qualitiesDropdown.value = QualitySettings.GetQualityLevel();
+        qualitiesDropdown.value = currentQuality;
         qualitiesDropdown.RefreshShownValue();
     }
 
@@ -74,18 +73,16 @@ public class SettingsMenu : MonoBehaviour
 
     private void ApplySettings()
     {
-        SetVolume("MasterVolume", masterVolumeSlider.value);
-        SetVolume("MusicVolume", musicVolumeSlider.value);
-        SetVolume("SoundEffectsVolume", soundEffectsVolumeSlider.value);
+        SetVolume("SoundVolume", soundSlider.value);
 
-        Resolution[] resolutions = Screen.resolutions;
+        var resolutions = Screen.resolutions;
         if (resolutions.Length > 0)
         {
             int idx = Mathf.Clamp(resolutionsDropdown.value, 0, resolutions.Length - 1);
 #if UNITY_6000_0_OR_NEWER
-            Screen.SetResolution(resolutions[idx].width, resolutions[idx].height, Screen.fullScreenMode, resolutions[idx].refreshRate);
+            Screen.SetResolution(resolutions[idx].width, resolutions[idx].height, Screen.fullScreenMode);
 #else
-            Screen.SetResolution(resolutions[idx].width, resolutions[idx].height, Screen.fullScreen);
+        Screen.SetResolution(resolutions[idx].width, resolutions[idx].height, Screen.fullScreen);
 #endif
         }
 
