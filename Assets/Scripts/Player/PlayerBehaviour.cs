@@ -22,6 +22,7 @@ public class PlayerBehaviour : MonoBehaviour, IFighter
 
     [Header("Damage")]
     [SerializeField] private float _damageDuration = .5f;
+    [SerializeField] private float _bounceForce = 100f;
 
     private Rigidbody2D _rb;
     private Vector2 _moveInput;
@@ -132,5 +133,16 @@ public class PlayerBehaviour : MonoBehaviour, IFighter
         yield return new WaitForSeconds(_damageDuration);
         _isBeingDamaged = false;
         _damageCoroutine = null;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (!_isBeingDamaged)
+            return;
+        if (collision != null)
+        {
+            Vector2 bounceDirection = Vector3.Reflect(_rb.linearVelocity, collision.contacts[0].normal);
+            _rb.AddForce(bounceDirection.normalized * _bounceForce, ForceMode2D.Impulse);
+        }
     }
 }

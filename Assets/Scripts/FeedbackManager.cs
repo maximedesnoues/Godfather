@@ -67,7 +67,7 @@ public class FeedbackManager : MonoBehaviour
     {
         foreach( var gamepad in Gamepad.all)
         {
-            gamepad.SetMotorSpeeds(.4f, .4f);
+            gamepad.SetMotorSpeeds(.2f, .2f);
         }
         yield return new WaitForSeconds(seconds);
         foreach (var gamepad in Gamepad.all)
