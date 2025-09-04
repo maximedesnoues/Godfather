@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
@@ -9,6 +10,7 @@ public class PlayerBehaviour : MonoBehaviour, IFighter
     [SerializeField] private float moveSpeedHolding = 2f;
     [SerializeField] private float _jumpForce = 100f;
     [SerializeField] private bool _isFacingRight;
+    [SerializeField] private Animator _characterAnimator;
 
     [Header("Jump")]
     [SerializeField] private float _groundCheckGap = 0.4f;
@@ -26,6 +28,7 @@ public class PlayerBehaviour : MonoBehaviour, IFighter
     [Header("Charge Attack")]
     [SerializeField] private float _chargeAttackForce = 120f;
     [SerializeField] private float _necessaryHoldDuration = 1f;
+    [SerializeField] private GameObject _feedBack;
 
     [Header("Damage")]
     [SerializeField] private float _damageDuration = .5f;
@@ -35,6 +38,7 @@ public class PlayerBehaviour : MonoBehaviour, IFighter
     [SerializeField] private UnityEvent _onJump;
     [SerializeField] private UnityEvent _onSimpleAttack;
     [SerializeField] private UnityEvent _onChargeAttack;
+    [SerializeField] private UnityEvent _onCharged;
     [SerializeField] private UnityEvent _onTakeDamage;
     [SerializeField] private UnityEvent _onBounce;
 
@@ -48,6 +52,7 @@ public class PlayerBehaviour : MonoBehaviour, IFighter
 
     private float _attackHoldDuration;
     private bool _isHolding = false;
+    private bool _isCharged = false;
 
     public int PlayerIndex {  get; set; }
     public PlayerInputManager PlayerInputs {  get; private set; }
@@ -74,18 +79,23 @@ public class PlayerBehaviour : MonoBehaviour, IFighter
         if (Physics2D.OverlapCircle(transform.position - Vector3.up * _groundCheckGap, _groundCheckRadius, _groundCheckLayers))
         {
             _rb.AddForce(Vector2.up * _jumpForce);
+            _characterAnimator.SetTrigger("Jump");
             _onJump?.Invoke();
         }
     }
     public void OnInteract(InputAction.CallbackContext context)
     {
         if (context.performed)
+        {
             _isHolding = true;
+            _characterAnimator.SetTrigger("StartAttack");
+        }
         if (context.canceled)
         {
             Attack(_attackHoldDuration >= _necessaryHoldDuration);
 
             _isHolding = false;
+            _isCharged = false;
             _attackHoldDuration = 0.0f;
         }
     }
@@ -99,6 +109,8 @@ public class PlayerBehaviour : MonoBehaviour, IFighter
 
     private void FixedUpdate()
     {
+        _characterAnimator.SetBool("IsMoving", _moveInput != Vector2.zero);
+
         _currentVelocity = _rb.linearVelocity;
         if (_isBeingDamaged)
             return; 
@@ -115,16 +127,27 @@ public class PlayerBehaviour : MonoBehaviour, IFighter
         if (_isHolding)
         {
             _attackHoldDuration += Time.deltaTime;
-            if (_attackHoldDuration >= _necessaryHoldDuration) { }
-                //do something
+            if (_attackHoldDuration >= _necessaryHoldDuration && !_isCharged)
+            {
+                _onCharged?.Invoke();
+                _feedBack.transform.DOScale(0.15f, .25f).SetEase(Ease.InExpo).OnComplete(() =>
+                {
+                    _feedBack.transform.DOScale(0.15f, 0.25f).OnComplete(() =>
+                    {
+                        _feedBack.transform.DOScale(0f, .7f).SetEase(Ease.OutExpo);
+                    });
+                });
+                _isCharged = true;
+            }
         }
     }
 
     public void Attack(bool isChargeAttack)
     {
         if (_isAttacking)
-            return;
+            return; 
         _attackAnimator.SetTrigger("Attack");
+        _characterAnimator.SetTrigger("Attack");
 
         Collider2D[] enemys = Physics2D.OverlapCircleAll(transform.position - (Vector3.right * (_isFacingRight ? 1f : -1f)) * _attackGap , _attackRadius, _attackLayers);
 
@@ -137,6 +160,7 @@ public class PlayerBehaviour : MonoBehaviour, IFighter
             if (enemy.TryGetComponent<IFighter>(out enemyInterface))
             {
                 enemyInterface.Damage(enemy.transform.position - transform.position, isChargeAttack ? _chargeAttackForce : _attackForce); // S'il y a un enemi à range, l'attaquer
+
 
                 if (isChargeAttack)
                     _onChargeAttack?.Invoke();

@@ -24,6 +24,18 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 3161224311831615333, guid: d9d4e77a379f9d448aa51e75e91b58b6, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3161224311831615333, guid: d9d4e77a379f9d448aa51e75e91b58b6, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3161224311831615333, guid: d9d4e77a379f9d448aa51e75e91b58b6, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3888142548808283163, guid: d9d4e77a379f9d448aa51e75e91b58b6, type: 3}
       propertyPath: m_Layer
       value: 8
@@ -48,6 +60,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 5767304105266784901, guid: d9d4e77a379f9d448aa51e75e91b58b6, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 7361b404104af094d8cfd97ae46a2f49, type: 2}
     - target: {fileID: 6598547355621091316, guid: d9d4e77a379f9d448aa51e75e91b58b6, type: 3}
       propertyPath: _isFacingRight
       value: 0
@@ -56,6 +72,10 @@ PrefabInstance:
       propertyPath: _attackLayers.m_Bits
       value: 640
       objectReference: {fileID: 0}
+    - target: {fileID: 8650896606712863780, guid: d9d4e77a379f9d448aa51e75e91b58b6, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -7336670108428831288, guid: 875c4fb0a1582744385caad37662ceaa, type: 3}
     - target: {fileID: 9085693308400167639, guid: d9d4e77a379f9d448aa51e75e91b58b6, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.6818185
