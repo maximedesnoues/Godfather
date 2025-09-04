@@ -3,7 +3,7 @@ using UnityEngine;
 public class Tent : MonoBehaviour, IFighter
 {
     [SerializeField] int _playerIndex;
-    public void Attack()
+    public void Attack(bool isChargeAttack)
     {
         // ça attaque pas une tente
     }

@@ -131,6 +131,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tent_Player2
       objectReference: {fileID: 0}
+    - target: {fileID: 3723722927917551161, guid: b122f746b3b93bf43a701db74b4e0c45, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4923124181018451182, guid: b122f746b3b93bf43a701db74b4e0c45, type: 3}
       propertyPath: _playerIndex
       value: 1
@@ -1069,6 +1073,10 @@ PrefabInstance:
     - target: {fileID: 3723722927917551161, guid: b122f746b3b93bf43a701db74b4e0c45, type: 3}
       propertyPath: m_Name
       value: Tent_Player1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3723722927917551161, guid: b122f746b3b93bf43a701db74b4e0c45, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8083912519325068745, guid: b122f746b3b93bf43a701db74b4e0c45, type: 3}
       propertyPath: m_LocalPosition.x

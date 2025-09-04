@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 using Unity.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEngine.Rendering.DebugUI;
 
 public class PlayerInputManager : MonoBehaviour
 {
@@ -23,21 +24,20 @@ public class PlayerInputManager : MonoBehaviour
 
         _player = GameManager.Instance.ConnectPlayer( _controllerIndex );
         _player.OnConnectController(this);
-        //Vibrate(.5f);
     }
-    public void OnMove(InputValue value)
+    public void OnMove(InputAction.CallbackContext context)
     {
-        _player.OnMove(value);
+        _player.OnMove(context);
     }
 
-    public void OnJump(InputValue value)
+    public void OnJump(InputAction.CallbackContext context)
     {
-        _player.OnJump(value);
+        if (context.performed)
+            _player.OnJump(context);
     }
 
-    public void OnInteract(InputValue value)
+    public void OnInteract(InputAction.CallbackContext context)
     {
-        _player.OnInteract(value);
+        _player.OnInteract(context);
     }
-
 }

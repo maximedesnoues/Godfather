@@ -348,6 +348,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerBehaviour
   moveSpeed: 350
+  moveSpeedHolding: 100
   _jumpForce: 10000
   _isFacingRight: 1
   _groundCheckGap: 0.5
@@ -358,12 +359,15 @@ MonoBehaviour:
   _attackForce: 50
   _attackGap: -1
   _attackRadius: 1
+  _attackCooldown: 0.5
   _attackLayers:
     serializedVersion: 2
     m_Bits: 128
   _attackAnimator: {fileID: 3383266566565275693}
-  _damageDuration: 0.25
-  _bounceForce: 100
+  _chargeAttackForce: 120
+  _necessaryHoldDuration: 0.25
+  _damageDuration: 0.5
+  _bounceForce: 10
 --- !u!61 &1365214449044632430
 BoxCollider2D:
   m_ObjectHideFlags: 0
