@@ -10,19 +10,23 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 214521907777378427, guid: d9d4e77a379f9d448aa51e75e91b58b6, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 600392234795490924, guid: d9d4e77a379f9d448aa51e75e91b58b6, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 1515068015805527019, guid: d9d4e77a379f9d448aa51e75e91b58b6, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 5615029076674491528, guid: d9d4e77a379f9d448aa51e75e91b58b6, type: 3}
       propertyPath: m_Name
       value: Player1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598547355621091316, guid: d9d4e77a379f9d448aa51e75e91b58b6, type: 3}
+      propertyPath: _attackLayers.m_Bits
+      value: 768
       objectReference: {fileID: 0}
     - target: {fileID: 9085693308400167639, guid: d9d4e77a379f9d448aa51e75e91b58b6, type: 3}
       propertyPath: m_LocalPosition.x

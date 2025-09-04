@@ -42,7 +42,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5243552897673922828}
   - component: {fileID: 3383266566565275693}
-  - component: {fileID: 3187140894048387946}
   m_Layer: 7
   m_Name: Weapon
   m_TagString: Untagged
@@ -88,42 +87,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!58 &3187140894048387946
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 600392234795490924}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 128
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 119
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Radius: 0.97
 --- !u!1 &1515068015805527019
 GameObject:
   m_ObjectHideFlags: 0
@@ -392,8 +355,14 @@ MonoBehaviour:
   _groundCheckLayers:
     serializedVersion: 2
     m_Bits: 64
-  _attackForce: 60
+  _attackForce: 50
+  _attackGap: -1
+  _attackRadius: 1
+  _attackLayers:
+    serializedVersion: 2
+    m_Bits: 128
   _attackAnimator: {fileID: 3383266566565275693}
+  _damageDuration: 0.25
 --- !u!61 &1365214449044632430
 BoxCollider2D:
   m_ObjectHideFlags: 0

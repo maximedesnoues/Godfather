@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -14,11 +15,20 @@ public class PlayerBehaviour : MonoBehaviour, IFighter
 
     [Header("Attack")]
     [SerializeField] private float _attackForce = 60f;
+    [SerializeField] private float _attackGap = 0.4f;
+    [SerializeField] private float _attackRadius = 3f;
+    [SerializeField] private LayerMask _attackLayers;
     [SerializeField] private Animator _attackAnimator;
+
+    [Header("Damage")]
+    [SerializeField] private float _damageDuration = .5f;
 
     private Rigidbody2D _rb;
     private Vector2 _moveInput;
-    private GameObject _enemyInRange;
+    private bool _isAttacking = false;
+    private Coroutine _attackCoroutine;
+    private bool _isBeingDamaged = false;
+    private Coroutine _damageCoroutine;
 
     public int PlayerIndex {  get; set; }
     public PlayerInputManager PlayerInputs {  get; private set; }
@@ -27,8 +37,8 @@ public class PlayerBehaviour : MonoBehaviour, IFighter
     {
         _rb = GetComponent<Rigidbody2D>();
         _rb.freezeRotation = true;
-        if (!_isFacingRight)
-            transform.localScale = Vector2.Scale(transform.localScale, new Vector2(-1, 1));
+        transform.eulerAngles = new Vector3(transform.eulerAngles.x, _isFacingRight ? 0 : 180, transform.eulerAngles.z);
+
     }
 
     public void OnConnectController(PlayerInputManager inputs)
@@ -58,10 +68,14 @@ public class PlayerBehaviour : MonoBehaviour, IFighter
     private void OnDrawGizmosSelected()
     {
         Gizmos.DrawSphere(transform.position - Vector3.up * _groundCheckGap, _groundCheckRadius);
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawSphere(transform.position - (Vector3.right * (_isFacingRight ? -1f : 1f)) * _attackGap, _attackRadius);
     }
 
     private void FixedUpdate()
     {
+        if(_isBeingDamaged)
+            return;
         _rb.linearVelocity = new Vector2(_moveInput.normalized.x * moveSpeed * Time.deltaTime,  _rb.linearVelocity.y);
         if ((_moveInput.normalized.x < 0 && !_isFacingRight) || (_moveInput.normalized.x > 0 && _isFacingRight))
         {
@@ -72,31 +86,51 @@ public class PlayerBehaviour : MonoBehaviour, IFighter
 
     public void Attack()
     {
+        if (_isAttacking)
+            return;
         _attackAnimator.SetTrigger("Attack");
 
-        if(_enemyInRange == null)
-            return;
-        IFighter enemy;
-        if (_enemyInRange.TryGetComponent<IFighter>(out enemy))
+        Collider2D[] enemys = Physics2D.OverlapCircleAll(transform.position - (Vector3.right * (_isFacingRight ? -1f : 1f)) * _attackGap , _attackRadius, _attackLayers);
+
+        foreach(Collider2D enemy in enemys)
         {
-            enemy.Damage(_enemyInRange.transform.position - transform.position, _attackForce); // S'il y a un enemi à range, l'attaquer
+            if (enemy == null || enemy.gameObject == gameObject)
+                return;
+
+            IFighter enemyInterface;
+            if (enemy.TryGetComponent<IFighter>(out enemyInterface))
+            {
+                enemyInterface.Damage(enemy.transform.position - transform.position, _attackForce); // S'il y a un enemi à range, l'attaquer
+
+                if(_isAttacking) continue;
+                if (_attackCoroutine != null)
+                    StopCoroutine(_attackCoroutine);
+                _attackCoroutine = StartCoroutine(Attacking());
+            }
         }
+    }
+    private IEnumerator Attacking()
+    {
+        _isAttacking = true;
+        yield return new WaitForSeconds(_damageDuration);
+        _isAttacking = false;
+        _attackCoroutine = null;
     }
 
     public void Damage(Vector2 dir, float force)
     {
-        Debug.Log(PlayerIndex + " Damage");
-        _rb.AddForce(dir * force); // rebondir selon la position de l'autre joueur
+        _rb.AddForce(dir.normalized * force, ForceMode2D.Impulse); // rebondir selon la position de l'autre joueur
+
+        if (_damageCoroutine != null)
+            StopCoroutine(_damageCoroutine);
+        _damageCoroutine = StartCoroutine(WaitDamage());
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private IEnumerator WaitDamage()
     {
-        if (collision != null && collision.gameObject != gameObject)
-            _enemyInRange = collision.gameObject;
-    }
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision != null && collision.gameObject != gameObject && _enemyInRange == collision.gameObject)
-            _enemyInRange = null;
+        _isBeingDamaged = true;
+        yield return new WaitForSeconds(_damageDuration);
+        _isBeingDamaged = false;
+        _damageCoroutine = null;
     }
 }
