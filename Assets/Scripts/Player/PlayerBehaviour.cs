@@ -11,6 +11,7 @@ public class PlayerBehaviour : MonoBehaviour, IFighter
     [SerializeField] private float _jumpForce = 100f;
     [SerializeField] private bool _isFacingRight;
     [SerializeField] private Animator _characterAnimator;
+    [SerializeField] private AudioSource _runningAudioSource;
 
     [Header("Jump")]
     [SerializeField] private float _groundCheckGap = 0.4f;
@@ -38,12 +39,14 @@ public class PlayerBehaviour : MonoBehaviour, IFighter
     [SerializeField] private UnityEvent _onJump;
     [SerializeField] private UnityEvent _onSimpleAttack;
     [SerializeField] private UnityEvent _onChargeAttack;
+    [SerializeField] private UnityEvent _onMissAttack;
     [SerializeField] private UnityEvent _onCharged;
     [SerializeField] private UnityEvent _onTakeDamage;
     [SerializeField] private UnityEvent _onBounce;
 
     private Rigidbody2D _rb;
     private Vector2 _moveInput;
+    private bool _isMoving;
     private Vector2 _currentVelocity;
     private bool _isAttacking = false;
     private Coroutine _attackCoroutine;
@@ -111,7 +114,17 @@ public class PlayerBehaviour : MonoBehaviour, IFighter
     {
         _characterAnimator.SetBool("IsMoving", _moveInput != Vector2.zero);
 
-        _currentVelocity = _rb.linearVelocity;
+        if( _moveInput != Vector2.zero && !_isMoving || _moveInput == Vector2.zero && _isMoving)
+        {
+            _isMoving = !_isMoving;
+
+            if(_isMoving)
+                _runningAudioSource.Play();
+            else
+                _runningAudioSource.Stop();
+        }
+
+         _currentVelocity = _rb.linearVelocity;
         if (_isBeingDamaged)
             return; 
         _rb.linearVelocity = new Vector2(_moveInput.normalized.x * (_isHolding? moveSpeedHolding : moveSpeed) * Time.deltaTime,  _rb.linearVelocity.y);
@@ -173,6 +186,8 @@ public class PlayerBehaviour : MonoBehaviour, IFighter
                 _attackCoroutine = StartCoroutine(Attacking());
             }
         }
+        if(enemys.Length == 0)
+            _onMissAttack?.Invoke();
     }
     private IEnumerator Attacking()
     {
@@ -182,7 +197,7 @@ public class PlayerBehaviour : MonoBehaviour, IFighter
         _attackCoroutine = null;
     }
 
-    public void Damage(Vector2 dir, float force)
+    public void Damage(Vector2 dir, float force, int playerID = 0)
     {
         _rb.AddForce(dir.normalized * force, ForceMode2D.Impulse); // rebondir selon la position de l'autre joueur
 
