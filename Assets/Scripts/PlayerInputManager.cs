@@ -40,14 +40,4 @@ public class PlayerInputManager : MonoBehaviour
         _player.OnInteract(value);
     }
 
-    /*
-    private void Vibrate(float seconds) => StartCoroutine(WaitForVibrate(seconds));
-
-    private IEnumerator WaitForVibrate(float seconds)
-    {
-        Gamepad.all[_controllerIndex].SetMotorSpeeds(1f, 1f);
-        yield return new WaitForSeconds(seconds);
-        Gamepad.all[_controllerIndex].SetMotorSpeeds(0f, 0f);
-    }
-    */
 }

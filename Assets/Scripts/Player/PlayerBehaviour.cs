@@ -69,7 +69,7 @@ public class PlayerBehaviour : MonoBehaviour, IFighter
     {
         Gizmos.DrawSphere(transform.position - Vector3.up * _groundCheckGap, _groundCheckRadius);
         Gizmos.color = Color.yellow;
-        Gizmos.DrawSphere(transform.position - (Vector3.right * (_isFacingRight ? -1f : 1f)) * _attackGap, _attackRadius);
+        Gizmos.DrawSphere(transform.position - (Vector3.right * (_isFacingRight ? 1f : -1f)) * _attackGap, _attackRadius);
     }
 
     private void FixedUpdate()
@@ -77,10 +77,10 @@ public class PlayerBehaviour : MonoBehaviour, IFighter
         if(_isBeingDamaged)
             return;
         _rb.linearVelocity = new Vector2(_moveInput.normalized.x * moveSpeed * Time.deltaTime,  _rb.linearVelocity.y);
-        if ((_moveInput.normalized.x < 0 && !_isFacingRight) || (_moveInput.normalized.x > 0 && _isFacingRight))
+        if ((_moveInput.normalized.x < 0 && _isFacingRight) || (_moveInput.normalized.x > 0 && !_isFacingRight))
         {
-            transform.eulerAngles = new Vector3(transform.eulerAngles.x, _isFacingRight ?  0 : 180, transform.eulerAngles.z);
             _isFacingRight = !_isFacingRight;
+            transform.eulerAngles = new Vector3(transform.eulerAngles.x, _isFacingRight ?  0 : 180, transform.eulerAngles.z);
         }
     }
 
@@ -90,7 +90,7 @@ public class PlayerBehaviour : MonoBehaviour, IFighter
             return;
         _attackAnimator.SetTrigger("Attack");
 
-        Collider2D[] enemys = Physics2D.OverlapCircleAll(transform.position - (Vector3.right * (_isFacingRight ? -1f : 1f)) * _attackGap , _attackRadius, _attackLayers);
+        Collider2D[] enemys = Physics2D.OverlapCircleAll(transform.position - (Vector3.right * (_isFacingRight ? 1f : -1f)) * _attackGap , _attackRadius, _attackLayers);
 
         foreach(Collider2D enemy in enemys)
         {
