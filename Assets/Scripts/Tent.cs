@@ -1,8 +1,10 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Tent : MonoBehaviour, IFighter
 {
     [SerializeField] int _playerIndex;
+    [SerializeField] UnityEvent OnTentHit;
     public void Attack(bool isChargeAttack)
     {
         // ça attaque pas une tente
@@ -11,6 +13,7 @@ public class Tent : MonoBehaviour, IFighter
     public void Damage(Vector2 dir, float force)
     {
         Debug.Log("Tent attacked : Player " + _playerIndex);
+        OnTentHit?.Invoke();
         FeedbackManager.Instance.ScreenShake(.5f, 1f);
         FeedbackManager.Instance.VibrateAllControllers(.3f);
     }

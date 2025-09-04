@@ -133,11 +133,39 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3723722927917551161, guid: b122f746b3b93bf43a701db74b4e0c45, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4923124181018451182, guid: b122f746b3b93bf43a701db74b4e0c45, type: 3}
       propertyPath: _playerIndex
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4923124181018451182, guid: b122f746b3b93bf43a701db74b4e0c45, type: 3}
+      propertyPath: OnTentHit.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4923124181018451182, guid: b122f746b3b93bf43a701db74b4e0c45, type: 3}
+      propertyPath: OnTentHit.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4923124181018451182, guid: b122f746b3b93bf43a701db74b4e0c45, type: 3}
+      propertyPath: OnTentHit.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 973856374}
+    - target: {fileID: 4923124181018451182, guid: b122f746b3b93bf43a701db74b4e0c45, type: 3}
+      propertyPath: OnTentHit.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4923124181018451182, guid: b122f746b3b93bf43a701db74b4e0c45, type: 3}
+      propertyPath: OnTentHit.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PlayOneShot
+      objectReference: {fileID: 0}
+    - target: {fileID: 4923124181018451182, guid: b122f746b3b93bf43a701db74b4e0c45, type: 3}
+      propertyPath: OnTentHit.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UnityEngine.AudioSource, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 4923124181018451182, guid: b122f746b3b93bf43a701db74b4e0c45, type: 3}
+      propertyPath: OnTentHit.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.AudioClip, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 6052907346263710213, guid: b122f746b3b93bf43a701db74b4e0c45, type: 3}
       propertyPath: m_Color.b
@@ -538,6 +566,11 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!82 &973856374 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 5952525488488420393, guid: 5b94efdfbc161cd4ca229d78378d0315, type: 3}
+  m_PrefabInstance: {fileID: 8818445940684421954}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &985931823
 GameObject:
   m_ObjectHideFlags: 0
@@ -1076,7 +1109,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3723722927917551161, guid: b122f746b3b93bf43a701db74b4e0c45, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8083912519325068745, guid: b122f746b3b93bf43a701db74b4e0c45, type: 3}
       propertyPath: m_LocalPosition.x

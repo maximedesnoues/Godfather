@@ -47,6 +47,14 @@ public class FeedbackManager : MonoBehaviour
         _audioSource.PlayOneShot(audioClips[randIndex].Audioclip, audioClips[randIndex].Volume);
     }
 
+    public void ScreenShake(float intensity)
+    {
+        if (_screenshakeCoroutine != null)
+            return;
+        Camera.main.transform.DOShakePosition(.5f, intensity);
+        _screenshakeCoroutine = StartCoroutine(WaitForScreenShake(.5f));
+    }
+
     public void ScreenShake(float intensity, float duration)
     {
         if (_screenshakeCoroutine != null)

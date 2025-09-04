@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 public class PlayerBehaviour : MonoBehaviour, IFighter
@@ -28,7 +29,14 @@ public class PlayerBehaviour : MonoBehaviour, IFighter
 
     [Header("Damage")]
     [SerializeField] private float _damageDuration = .5f;
-    [SerializeField] private float _bounceForce = 100f;
+    [SerializeField] private float _bounceForce = 100f;    
+    
+    [Header("Events")]
+    [SerializeField] private UnityEvent _onJump;
+    [SerializeField] private UnityEvent _onSimpleAttack;
+    [SerializeField] private UnityEvent _onChargeAttack;
+    [SerializeField] private UnityEvent _onTakeDamage;
+    [SerializeField] private UnityEvent _onBounce;
 
     private Rigidbody2D _rb;
     private Vector2 _moveInput;
@@ -49,7 +57,6 @@ public class PlayerBehaviour : MonoBehaviour, IFighter
         _rb = GetComponent<Rigidbody2D>();
         _rb.freezeRotation = true;
         transform.eulerAngles = new Vector3(transform.eulerAngles.x, _isFacingRight ? 0 : 180, transform.eulerAngles.z);
-
     }
 
     public void OnConnectController(PlayerInputManager inputs)
@@ -67,6 +74,7 @@ public class PlayerBehaviour : MonoBehaviour, IFighter
         if (Physics2D.OverlapCircle(transform.position - Vector3.up * _groundCheckGap, _groundCheckRadius, _groundCheckLayers))
         {
             _rb.AddForce(Vector2.up * _jumpForce);
+            _onJump?.Invoke();
         }
     }
     public void OnInteract(InputAction.CallbackContext context)
@@ -130,7 +138,12 @@ public class PlayerBehaviour : MonoBehaviour, IFighter
             {
                 enemyInterface.Damage(enemy.transform.position - transform.position, isChargeAttack ? _chargeAttackForce : _attackForce); // S'il y a un enemi à range, l'attaquer
 
-                if(_isAttacking) continue;
+                if (isChargeAttack)
+                    _onChargeAttack?.Invoke();
+                else
+                    _onSimpleAttack?.Invoke();
+
+                if (_isAttacking) continue;
                 if (_attackCoroutine != null)
                     StopCoroutine(_attackCoroutine);
                 _attackCoroutine = StartCoroutine(Attacking());
@@ -152,6 +165,7 @@ public class PlayerBehaviour : MonoBehaviour, IFighter
         if (_damageCoroutine != null)
             StopCoroutine(_damageCoroutine);
         _damageCoroutine = StartCoroutine(WaitDamage());
+        _onTakeDamage?.Invoke();
     }
 
     private IEnumerator WaitDamage()
@@ -170,6 +184,7 @@ public class PlayerBehaviour : MonoBehaviour, IFighter
         {
             Vector2 bounceDirection = Vector3.Reflect(_currentVelocity, collision.contacts[0].normal);
             _rb.AddForce(bounceDirection * _bounceForce, ForceMode2D.Impulse);
+            _onBounce?.Invoke();
         }
     }
 }
