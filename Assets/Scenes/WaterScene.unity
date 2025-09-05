@@ -1345,7 +1345,7 @@ MonoBehaviour:
   tentP1: {fileID: 922254321499016788}
   tentP2: {fileID: 74427300}
   startingLives: 3
-  roundDurationSeconds: 3
+  roundDurationSeconds: 60
   postRoundDelay: 2
   simultaneousWindow: 0.12
   risingWater: {fileID: 1956114248}
