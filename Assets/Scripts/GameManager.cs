@@ -2,11 +2,15 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Utilities;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private PlayerBehaviour _player1, _player2;
     private Dictionary<PlayerBehaviour, int> _players = new();
+
+    public bool IsGameFinished;
 
     #region Singleton
     private static GameManager instance = null;
@@ -72,6 +76,17 @@ public class GameManager : MonoBehaviour
             _players[_player2] = -1;
             Destroy(_player2.PlayerInputs.gameObject);
             Debug.Log("Disconnect player 2");
+        }
+    }
+
+    private void Update()
+    {
+        if (IsGameFinished)
+        {
+            if (Gamepad.current.buttonSouth.wasPressedThisFrame) {
+                SceneManager.LoadScene(0);
+                IsGameFinished = false;
+            }
         }
     }
 }

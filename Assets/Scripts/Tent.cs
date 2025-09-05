@@ -1,11 +1,16 @@
+using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class Tent : MonoBehaviour, IFighter
 {
-    public int PlayerIndex;
     [SerializeField] int _playerIndex;
     [SerializeField] UnityEvent OnTentHit;
+    public int PlayerIndex;
+    RoundManager _roundManager;
+    TentLives _life;
+
     public void Attack(bool isChargeAttack)
     {
         // ça attaque pas une tente
@@ -16,20 +21,19 @@ public class Tent : MonoBehaviour, IFighter
         if(_playerIndex == PlayerIndex) 
             return;
         Debug.Log("Tent attacked : Player " + _playerIndex);
+
+        _roundManager.RegisterDrown(_playerIndex);
+
         OnTentHit?.Invoke();
         FeedbackManager.Instance.ScreenShake(.5f, 1f);
         FeedbackManager.Instance.VibrateAllControllers(.3f);
+
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        _roundManager = FindAnyObjectByType<RoundManager>();
+        _life = GetComponent<TentLives>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

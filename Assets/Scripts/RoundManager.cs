@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using DG.Tweening;
+using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -28,7 +30,10 @@ public class RoundManager : MonoBehaviour
 
     [Header("HUD (Timer only)")]
     [SerializeField] private Text timerText;
-    // [SerializeField] private Text centerMessage;
+
+    [Header("End Screen")]
+    [SerializeField] private TMP_Text _endMessage;
+    [SerializeField] private CanvasGroup _endScreen;
 
     private float roundTimeLeft;
     private bool roundRunning;
@@ -81,12 +86,27 @@ public class RoundManager : MonoBehaviour
             matchOver = tentP1.IsDepleted || tentP2.IsDepleted;
         }
 
-        LockInputs(true);
         var winnerMsg = tentP1.IsDepleted == tentP2.IsDepleted
             ? "Match nul !"
             : (tentP2.IsDepleted ? "Joueur 1 gagne !" : "Joueur 2 gagne !");
         Debug.Log(winnerMsg);
+
+        _endMessage.text = tentP1.IsDepleted == tentP2.IsDepleted
+            ? "Draw!"
+            : (tentP2.IsDepleted ? "Player 1 wins !" : "Player 2 wins !");
+        _endScreen.DOFade(1, .5f);
+
+        StartCoroutine(WaitLockInputs());
+
         // ShowCenter($"Fin de partie !\n{winnerMsg}");
+    }
+
+    private IEnumerator WaitLockInputs()
+    {
+        LockInputs(true);
+        yield return new WaitForSeconds(2);
+        LockInputs(false);
+        GameManager.Instance.IsGameFinished = true;
     }
 
     private IEnumerator StartRound()
@@ -106,6 +126,12 @@ public class RoundManager : MonoBehaviour
         roundTimeLeft = Mathf.Max(1f, roundDurationSeconds);
         roundRunning = true;
         LockInputs(false);
+    }
+
+    public void ResetWater()
+    {
+        risingWater.ResetToStart(GetWaterStartY());
+        risingWater.StartRising();
     }
 
     private IEnumerator PlayRound()
@@ -150,6 +176,12 @@ public class RoundManager : MonoBehaviour
         if (player2?.PlayerInputs?.Map != null) player2.PlayerInputs.Map.enabled = !locked;
     }
 
+    public void ResetPlayers()
+    {
+        ResetPlayer(player1, spawnP1);
+        ResetPlayer(player2, spawnP2);
+    }
+
     private void ResetPlayer(PlayerBehaviour p, Transform spawn)
     {
         var rb = p.GetComponent<Rigidbody2D>();
@@ -169,6 +201,15 @@ public class RoundManager : MonoBehaviour
     {
         var minY = Mathf.Min(spawnP1.position.y, spawnP2.position.y);
         return minY + waterStartYOffset;
+    }
+
+    public void RegisterDrown(int playerIndex)
+    {
+        if (playerIndex == 0)
+            RegisterDrown(player1);
+        else if(playerIndex == 1)
+            RegisterDrown(player2);
+
     }
 
     // Appelé par WaterKillZone quand un joueur touche la surface
