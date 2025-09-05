@@ -48,6 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   _player1: {fileID: 0}
   _player2: {fileID: 0}
+  IsGameFinished: 0
 --- !u!1001 &2237113592603041191
 PrefabInstance:
   m_ObjectHideFlags: 0
