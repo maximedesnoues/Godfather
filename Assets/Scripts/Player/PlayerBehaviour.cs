@@ -172,7 +172,7 @@ public class PlayerBehaviour : MonoBehaviour, IFighter
             IFighter enemyInterface;
             if (enemy.TryGetComponent<IFighter>(out enemyInterface))
             {
-                enemyInterface.Damage(enemy.transform.position - transform.position, isChargeAttack ? _chargeAttackForce : _attackForce); // S'il y a un enemi à range, l'attaquer
+                enemyInterface.Damage(enemy.transform.position - transform.position, isChargeAttack ? _chargeAttackForce : _attackForce, PlayerIndex); // S'il y a un enemi à range, l'attaquer
 
 
                 if (isChargeAttack)

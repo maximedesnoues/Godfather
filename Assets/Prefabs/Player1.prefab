@@ -32,6 +32,106 @@ PrefabInstance:
       propertyPath: _attackLayers.m_Bits
       value: 768
       objectReference: {fileID: 0}
+    - target: {fileID: 6598547355621091316, guid: d9d4e77a379f9d448aa51e75e91b58b6, type: 3}
+      propertyPath: _onJump.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598547355621091316, guid: d9d4e77a379f9d448aa51e75e91b58b6, type: 3}
+      propertyPath: _onCharged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598547355621091316, guid: d9d4e77a379f9d448aa51e75e91b58b6, type: 3}
+      propertyPath: _onJump.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598547355621091316, guid: d9d4e77a379f9d448aa51e75e91b58b6, type: 3}
+      propertyPath: _onJump.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598547355621091316, guid: d9d4e77a379f9d448aa51e75e91b58b6, type: 3}
+      propertyPath: _onMissAttack.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598547355621091316, guid: d9d4e77a379f9d448aa51e75e91b58b6, type: 3}
+      propertyPath: _onChargeAttack.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598547355621091316, guid: d9d4e77a379f9d448aa51e75e91b58b6, type: 3}
+      propertyPath: _onCharged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598547355621091316, guid: d9d4e77a379f9d448aa51e75e91b58b6, type: 3}
+      propertyPath: _onSimpleAttack.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598547355621091316, guid: d9d4e77a379f9d448aa51e75e91b58b6, type: 3}
+      propertyPath: _onCharged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598547355621091316, guid: d9d4e77a379f9d448aa51e75e91b58b6, type: 3}
+      propertyPath: _onMissAttack.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598547355621091316, guid: d9d4e77a379f9d448aa51e75e91b58b6, type: 3}
+      propertyPath: _onMissAttack.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598547355621091316, guid: d9d4e77a379f9d448aa51e75e91b58b6, type: 3}
+      propertyPath: _onChargeAttack.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598547355621091316, guid: d9d4e77a379f9d448aa51e75e91b58b6, type: 3}
+      propertyPath: _onSimpleAttack.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598547355621091316, guid: d9d4e77a379f9d448aa51e75e91b58b6, type: 3}
+      propertyPath: _onChargeAttack.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598547355621091316, guid: d9d4e77a379f9d448aa51e75e91b58b6, type: 3}
+      propertyPath: _onSimpleAttack.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598547355621091316, guid: d9d4e77a379f9d448aa51e75e91b58b6, type: 3}
+      propertyPath: _onJump.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598547355621091316, guid: d9d4e77a379f9d448aa51e75e91b58b6, type: 3}
+      propertyPath: _onCharged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598547355621091316, guid: d9d4e77a379f9d448aa51e75e91b58b6, type: 3}
+      propertyPath: _onMissAttack.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598547355621091316, guid: d9d4e77a379f9d448aa51e75e91b58b6, type: 3}
+      propertyPath: _onChargeAttack.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598547355621091316, guid: d9d4e77a379f9d448aa51e75e91b58b6, type: 3}
+      propertyPath: _onSimpleAttack.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598547355621091316, guid: d9d4e77a379f9d448aa51e75e91b58b6, type: 3}
+      propertyPath: _onJump.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598547355621091316, guid: d9d4e77a379f9d448aa51e75e91b58b6, type: 3}
+      propertyPath: _onCharged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598547355621091316, guid: d9d4e77a379f9d448aa51e75e91b58b6, type: 3}
+      propertyPath: _onMissAttack.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598547355621091316, guid: d9d4e77a379f9d448aa51e75e91b58b6, type: 3}
+      propertyPath: _onChargeAttack.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598547355621091316, guid: d9d4e77a379f9d448aa51e75e91b58b6, type: 3}
+      propertyPath: _onSimpleAttack.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 9085693308400167639, guid: d9d4e77a379f9d448aa51e75e91b58b6, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3.0909092

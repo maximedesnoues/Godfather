@@ -27,7 +27,6 @@ public class GameManager : MonoBehaviour
         {
             instance = this;
         }
-        DontDestroyOnLoad(this.gameObject);
     }
     #endregion
 
@@ -52,7 +51,7 @@ public class GameManager : MonoBehaviour
         else if( _players[_player2] == -1) 
         {
             _players[_player2] = controllerId;
-            _player1.PlayerIndex = 1;
+            _player2.PlayerIndex = 1;
             Debug.Log("Connect player 2");
             return _player2;
         }

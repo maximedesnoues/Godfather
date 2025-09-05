@@ -602,7 +602,7 @@ MonoBehaviour:
   _groundCheckLayers:
     serializedVersion: 2
     m_Bits: 64
-  _attackForce: 50
+  _attackForce: 20
   _attackGap: -0.5
   _attackRadius: 0.57
   _attackCooldown: 0.5
@@ -614,7 +614,7 @@ MonoBehaviour:
   _necessaryHoldDuration: 0.5
   _feedBack: {fileID: 3137946332221735915}
   _damageDuration: 0.5
-  _bounceForce: 10
+  _bounceForce: 2
   _onJump:
     m_PersistentCalls:
       m_Calls: []
@@ -622,6 +622,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _onChargeAttack:
+    m_PersistentCalls:
+      m_Calls: []
+  _onMissAttack:
     m_PersistentCalls:
       m_Calls: []
   _onCharged:

@@ -17,7 +17,7 @@ public class Tent : MonoBehaviour, IFighter
 
     public void Damage(Vector2 dir, float force, int playerID = 0)
     {
-        if(_playerIndex == PlayerIndex) 
+        if(_playerIndex == playerID) 
             return;
         Debug.Log("Tent attacked : Player " + _playerIndex);
 
