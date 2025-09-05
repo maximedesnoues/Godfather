@@ -23,7 +23,7 @@ public class RoundManager : MonoBehaviour
 
     [Header("Water")]
     [SerializeField] private RisingWater risingWater;
-    [SerializeField] private float waterStartYOffset = -7f;
+    [SerializeField] private float waterStartYOffset = -6f;
     [SerializeField] private float waterRiseSpeed = 2.5f;
 
     [Header("HUD (Timer only)")]
@@ -62,7 +62,7 @@ public class RoundManager : MonoBehaviour
         };
 
         // Initialise et place l'eau
-        risingWater.Initialize(this, waterRiseSpeed, GetWaterStartY());
+        risingWater.Initialize(this, GetWaterStartY());
 
         StartCoroutine(GameLoop());
     }

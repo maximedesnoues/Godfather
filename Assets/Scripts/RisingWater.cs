@@ -1,25 +1,42 @@
 ﻿using UnityEngine;
 
+[RequireComponent(typeof(SpriteRenderer))]
 public class RisingWater : MonoBehaviour
 {
-    [SerializeField] private float riseSpeed = 2f;
-    [SerializeField] private bool rising;
+    [Header("Montée par scale (bas fixe)")]
+    [SerializeField] private float riseSpeed = 0.5f;
+    [SerializeField] private float startScaleY = 0.05f;
+    [SerializeField] private float maxScaleY = 100f;
+
+    [Header("Décalage de départ vers le haut (en unités monde)")]
+    [SerializeField] private float startYOffset = 0.5f;
 
     private RoundManager manager;
+    private float fixedBottomY;
+    private float baseScaleX, baseScaleZ;
+    private SpriteRenderer sr;
+    private bool rising = false;
 
-    public void Initialize(RoundManager rm, float speed, float startY)
+    public void Initialize(RoundManager rm, float baseBottomY)
     {
         manager = rm;
-        riseSpeed = speed;
-        ResetToStart(startY);
+        if (sr == null) sr = GetComponent<SpriteRenderer>();
+
+        baseScaleX = transform.localScale.x;
+        baseScaleZ = transform.localScale.z;
+
+        // Décalage appliqué dès l'init
+        fixedBottomY = baseBottomY + startYOffset;
+
+        ApplyStartState();
     }
 
-    public void ResetToStart(float y)
+    public void ResetToStart(float baseBottomY)
     {
-        var p = transform.position;
-        p.y = y;
-        transform.position = p;
-        rising = false;
+        // Décalage réappliqué à chaque reset
+        fixedBottomY = baseBottomY + startYOffset;
+
+        ApplyStartState();
     }
 
     public void StartRising() => rising = true;
@@ -28,6 +45,40 @@ public class RisingWater : MonoBehaviour
     private void Update()
     {
         if (!rising) return;
-        transform.position += Vector3.up * (riseSpeed * Time.deltaTime);
+
+        // Augmente l’échelle Y
+        float newY = Mathf.Min(transform.localScale.y + riseSpeed * Time.deltaTime, maxScaleY);
+        SetScaleY(newY);
+
+        // Recalage du centre pour garder le bas fixé
+        UpdatePositionForBottom();
+    }
+
+    private void ApplyStartState()
+    {
+        SetScaleY(Mathf.Max(0.0001f, startScaleY));
+        UpdatePositionForBottom();
+        rising = false;
+    }
+
+    private void SetScaleY(float y)
+    {
+        var s = transform.localScale;
+        s.x = baseScaleX;
+        s.y = y;
+        s.z = baseScaleZ;
+        transform.localScale = s;
+    }
+
+    private void UpdatePositionForBottom()
+    {
+        if (sr == null) sr = GetComponent<SpriteRenderer>();
+        if (sr == null) return;
+
+        float height = sr.bounds.size.y;
+
+        var p = transform.position;
+        p.y = fixedBottomY + height * 0.5f;
+        transform.position = p;
     }
 }
